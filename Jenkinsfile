@@ -15,7 +15,7 @@ pipeline{
           spec:
             containers:
             - name: sonarcloud
-              image: teracy/create-react-app
+              image: maven
               command:
               - cat
               tty: true
@@ -32,7 +32,7 @@ pipeline{
         }
         stage("sonarqube"){
                 steps{
-                    container("java"){
+                    container("sonarcloud"){
                           script {
                                scannerHome = tool 'sonarqube-scanner'
                           }
