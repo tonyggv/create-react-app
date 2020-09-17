@@ -1,26 +1,26 @@
 pipeline{
-  agent {
-    kubernetes {
-              yaml """
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          labels:
-            some-label: some-label-value
-        spec:
-          containers:
-          - name: node
-            image: teracy/create-react-app 
-            command:
-            - cat
-            tty: true
-          - name: java
-            image: maven
-            command: 
-            - cat
-            tty: true
-      """
-    }
+    agent {
+      kubernetes {
+        label "sonarcloud-automation"
+        idleMinutes 1440
+        defaultContainer 'sonarcloud'
+        namespace "cicd"
+        cloud "k8scluster-infra-ops-sg"
+        yaml """
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: sonarcloud
+            namespace: cicd
+          spec:
+            containers:
+            - name: sonarcloud
+              image: teracy/create-react-app
+              command:
+              - cat
+              tty: true
+        """
+      }
   }
     stages{
         stage("check version"){
@@ -31,8 +31,6 @@ pipeline{
             }
         }
         stage("sonarqube"){
-
-
                 steps{
                     container("java"){
                           script {
