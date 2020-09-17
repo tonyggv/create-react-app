@@ -30,11 +30,7 @@ pipeline{
                  }
             }
         }
-                
-            
-
-            }
-            stage("sonarqube"){
+        stage("sonarqube"){
 
 
                 steps{
@@ -51,7 +47,5 @@ pipeline{
                     }
                 }
             }
-
-
     }
 }
