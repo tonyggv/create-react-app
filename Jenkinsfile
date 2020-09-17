@@ -1,7 +1,7 @@
 pipeline{
     agent {
       kubernetes {
-        label "sonarcloud-automation"
+        label "sonarcloud-test"
         idleMinutes 1440
         defaultContainer 'sonarcloud'
         namespace "cicd"
