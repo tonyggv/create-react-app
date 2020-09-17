@@ -25,7 +25,7 @@ pipeline{
     stages{
         stage("check version"){
              steps{
-                 container("node"){
+                 container("sonarcloud"){
                   sh 'node --version'
                  }
             }
