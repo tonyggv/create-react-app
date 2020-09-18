@@ -23,7 +23,7 @@ pipeline{
       }
   }
     stages{
-        stage("Scan Code"){
+        stage("sonarqube"){
                 steps{
                     container("sonar-scanner"){
                           script {
