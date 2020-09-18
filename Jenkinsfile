@@ -1,21 +1,21 @@
 pipeline{
     agent {
       kubernetes {
-        label "sonarcloud-automation"
+        label "sonar-scanner"
         idleMinutes 1440
-        defaultContainer 'sonarcloud'
+        defaultContainer 'sonar-scanner'
         namespace "cicd"
         cloud "k8scluster-infra-ops-sg"
         yaml """
           apiVersion: v1
           kind: Pod
           metadata:
-            name: sonarcloud
+            name: sonar-scanner
             namespace: cicd
           spec:
             containers:
-            - name: sonarcloud
-              image: maven
+            - name: sonar-scanner
+              image: sonarsource/sonar-scanner-cli
               command:
               - cat
               tty: true
@@ -23,16 +23,9 @@ pipeline{
       }
   }
     stages{
-        stage("check version"){
-             steps{
-                 container("node"){
-                  sh 'node --version'
-                 }
-            }
-        }
-        stage("sonarqube"){
+        stage("Scan Code"){
                 steps{
-                    container("sonarcloud"){
+                    container("sonar-scanner"){
                           script {
                                scannerHome = tool 'sonarqube-scanner'
                           }
